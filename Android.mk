@@ -85,7 +85,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := libgralloc_drm
 LOCAL_MODULE_TAGS := optional
 
-LOCAL_CFLAGS := -std=c99
+LOCAL_CFLAGS := -std=c99 -g -O0
 
 LOCAL_SRC_FILES := \
 	gralloc_drm.c \
@@ -130,12 +130,12 @@ ifeq ($(strip $(DRM_USES_PIPE)),true)
 LOCAL_SRC_FILES += gralloc_drm_pipe.c
 LOCAL_CFLAGS += -DENABLE_PIPE
 LOCAL_C_INCLUDES += \
-	external/mesa/include \
-	external/mesa/src \
-	external/mesa/src/gallium/include \
-	external/mesa/src/gallium/winsys \
-	external/mesa/src/gallium/drivers \
-	external/mesa/src/gallium/auxiliary
+	external/mesa3d/include \
+	external/mesa3d/src \
+	external/mesa3d/src/gallium/include \
+	external/mesa3d/src/gallium/winsys \
+	external/mesa3d/src/gallium/drivers \
+	external/mesa3d/src/gallium/auxiliary
 
 ifneq ($(filter vmwgfx, $(DRM_GPU_DRIVERS)),)
 LOCAL_CFLAGS += -DENABLE_PIPE_VMWGFX
@@ -143,7 +143,7 @@ LOCAL_STATIC_LIBRARIES += \
 	libmesa_pipe_svga \
 	libmesa_winsys_svga
 LOCAL_C_INCLUDES += \
-	external/mesa/src/gallium/drivers/svga/include
+	external/mesa3d/src/gallium/drivers/svga/include
 endif
 
 LOCAL_STATIC_LIBRARIES += \
@@ -168,7 +168,7 @@ LOCAL_SHARED_LIBRARIES := \
 LOCAL_SHARED_LIBRARIES += \
 	libGLESv1_CM
 
-LOCAL_MODULE := gralloc.drm
+LOCAL_MODULE := gralloc.rpi2b
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_RELATIVE_PATH := hw
 include $(BUILD_SHARED_LIBRARY)

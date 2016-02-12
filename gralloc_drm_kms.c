@@ -919,6 +919,7 @@ static int drm_kms_init_with_connector(struct gralloc_drm_t *drm,
 	case 4:
 	default:
 		output->fb_format = HAL_PIXEL_FORMAT_BGRA_8888;
+		//output->fb_format = HAL_PIXEL_FORMAT_RGBA_8888;
 		break;
 	}
 
@@ -1079,6 +1080,9 @@ int gralloc_drm_init_kms(struct gralloc_drm_t *drm)
 
 	if (drm->resources)
 		return 0;
+
+
+	drmSetClientCap(drm->fd, DRM_CLIENT_CAP_UNIVERSAL_PLANES, 1);
 
 	drm->resources = drmModeGetResources(drm->fd);
 	if (!drm->resources) {

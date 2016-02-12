@@ -115,6 +115,8 @@ vc4_alloc(struct gralloc_drm_drv_t *drv, struct gralloc_drm_handle_t *handle)
 		pitch = ALIGN(width, 32) * cpp;
 		uint32_t size = pitch * height;
 
+		handle->stride = pitch;
+
 		struct drm_vc4_create_bo create = {
 			.size = size,
 		};
@@ -224,13 +226,15 @@ static void vc4_init_kms_features(struct gralloc_drm_drv_t *drv,
 	/* XXX: Add more formats. */
 	switch (drm->primary.fb_format) {
 	case HAL_PIXEL_FORMAT_BGRA_8888:
+	case HAL_PIXEL_FORMAT_RGBA_8888:
+	case HAL_PIXEL_FORMAT_RGBX_8888:
 		break;
 	default:
 		drm->primary.fb_format = HAL_PIXEL_FORMAT_BGRA_8888;
 		break;
 	}
 
-	drm->swap_mode = DRM_SWAP_COPY; /* XXX: For now. */
+	drm->swap_mode = DRM_SWAP_FLIP; /* XXX: For now. */
 	drm->mode_sync_flip = 1;
 	drm->swap_interval = 1;
 	drm->vblank_secondary = 0;
